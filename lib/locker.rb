@@ -1,14 +1,18 @@
 class Locker
-	def initialize row, column, section
-		self.row = row
-		self.column = column
-		self.section = section
+	attr_accessor :value
+
+	def initialize(*args)
+		if args.size == 1
+			raise ArgumentError, "value argument is not an instance of Integer" unless args[0].kind_of? Integer
+			@value = args[0]
+		end
 	end
 
-	attr_accessor :row, :column, :section
-	attr_reader :value
-
-	def value=(lockerValue)
-		@value = lockerValue
+	def ==(another_value)
+		case another_value
+			when Integer then @value == another_value
+			when Locker then @value == another_value.value
+			else false
+		end
 	end
 end
