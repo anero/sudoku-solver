@@ -3,21 +3,47 @@ require File.dirname(__FILE__) + '/lockers_line'
 class Board
 	def initialize
 		@rows = []
-		(0..8).each {|i| @rows[i] = Lockers_Line.new }
+		@columns = []
+		@sections = []
+		(0..8).each { |i| 
+			@rows[i] = Lockers_Line.new
+			@columns[i] = Lockers_Line.new
+			@sections[i] = Lockers_Section.new
+		}
 	end
 	
-	def value_at(col, row)
-		@rows[col - 1].lockers(row)
+	def value_at(row, col)
+		# locker value can be get from any of the 3 collections (rows, columns or sections) which must be kept at sync at all times
+		@rows[col].locker(row)
 	end
 	
-	def add_locker(locker, col, row)
-		@rows[col - 1].add_locker(locker, row)
+	def add_locker(locker, row, col)
+		@rows[col].set_locker(locker, row)
+		@columns[row].set_locker(locker, col)
+		
+		section_index = get_section_index_from_row_and_col(row, col)
+		inner_section_row = get_section_inner_row_from_row_and_col(section_index, row, col)
+		inner_section_col = get_section_inner_col_from_row_and_col(section_index, row, col)
+		@sections[section_index].set_locker(locker, inner_section_row, inner_section_col)
 	end
 	
 	def is_valid?
 		valid = true
-		(0..8).each {|i| valid = valid && @rows[i].is_valid? }
+		(0..8).each {|i| valid = valid && @rows[i].is_valid? && @columns[i].is_valid? && @sections[i].is_valid? }
 		
 		valid
 	end
+	
+	private
+		def get_section_index_from_row_and_col(row, col)
+			3 * (col / 3) + (row / 3)
+		end
+		
+		def get_section_inner_row_from_row_and_col(section_index, row, col)
+			row % 3
+		end
+		
+		def get_section_inner_col_from_row_and_col(section_index, row, col)
+			col % 3
+		end
 end

@@ -8,51 +8,50 @@ describe "Lockers_Line" do
 		lockers_line.lockers_set_count.should == 0
 	end
 
-	it "should add locker" do
+	it "should set locker" do
 		lockers_line = Lockers_Line.new
 		locker = Locker.new
-		lockers_line.add_locker locker, 3
+		lockers_line.set_locker locker, 3
 
-		lockers_line.lockers(3).should == locker
+		lockers_line.locker(3).should == locker
 	end
 
-	it "should throw if adding locker on invalid position" do
+	it "should throw if setting locker on invalid position" do
 		lockers_line = Lockers_Line.new
-		lambda{lockers_line.add_locker Locker.new, -1}.should raise_error(ArgumentError)
-		lambda{lockers_line.add_locker Locker.new, 0}.should raise_error(ArgumentError)
-		lambda{lockers_line.add_locker Locker.new, 10}.should raise_error(ArgumentError)
+		lambda{lockers_line.set_locker Locker.new, -1}.should raise_error(ArgumentError)
+		lambda{lockers_line.set_locker Locker.new, 10}.should raise_error(ArgumentError)
 	end
 
 	it "should return false on is_valid when invalid lockers_line" do
 		lockers_line = Lockers_Line.new
-		lockers_line.add_locker Locker.new(1), 1
-		lockers_line.add_locker Locker.new(1), 2
+		lockers_line.set_locker Locker.new(1), 1
+		lockers_line.set_locker Locker.new(1), 2
 
 		lockers_line.is_valid?.should == false
 	end
 
 	it "should return true on is_valid when valid lockers_line" do
 		lockers_line = Lockers_Line.new
-		lockers_line.add_locker Locker.new(1), 1
-		lockers_line.add_locker Locker.new(2), 2
+		lockers_line.set_locker Locker.new(1), 1
+		lockers_line.set_locker Locker.new(2), 2
 
 		lockers_line.is_valid?.should == true
 	end
 	
-	it "should replace locker when adding on same position" do
+	it "should replace locker when setting on same position" do
 		lockers_line = Lockers_Line.new
-		lockers_line.add_locker Locker.new(1), 1
-		lockers_line.add_locker Locker.new(9), 1
+		lockers_line.set_locker Locker.new(1), 1
+		lockers_line.set_locker Locker.new(9), 1
 		
 		lockers_line.lockers_set_count.should == 1
-		lockers_line.lockers(1).should == 9
+		lockers_line.locker(1).should == 9
 	end
 
 	it "should return unused values" do
 		lockers_line = Lockers_Line.new
 
-		lockers_line.add_locker Locker.new(1), 1
-		lockers_line.add_locker Locker.new(9), 2
+		lockers_line.set_locker Locker.new(1), 1
+		lockers_line.set_locker Locker.new(9), 2
 
 		unused_values = lockers_line.get_unused_values
 
