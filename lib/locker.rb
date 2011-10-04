@@ -15,4 +15,8 @@ class Locker
 			else false
 		end
 	end
+
+	def can_set_value?
+		true
+	end
 end

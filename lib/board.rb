@@ -14,17 +14,25 @@ class Board
 	
 	def value_at(row, col)
 		# locker value can be get from any of the 3 collections (rows, columns or sections) which must be kept at sync at all times
-		@rows[col].locker(row)
+		@rows[col].locker(row).value unless @rows[col].locker(row) == nil
 	end
 	
-	def add_locker(locker, row, col)
-		@rows[col].set_locker(locker, row)
-		@columns[row].set_locker(locker, col)
-		
-		section_index = get_section_index_from_row_and_col(row, col)
-		inner_section_row = get_section_inner_row_from_row_and_col(section_index, row, col)
-		inner_section_col = get_section_inner_col_from_row_and_col(section_index, row, col)
-		@sections[section_index].set_locker(locker, inner_section_row, inner_section_col)
+	def can_set_value?(row, col)
+		if (@rows[col].locker(row) != nil) then @rows[col].locker(row).can_set_value?
+		else return true
+		end
+	end
+	
+	def set_value(value, row, col)
+		if (@rows[col].locker(row) == nil) then add_locker(Locker.new(value), row, col)
+		else @rows[col].locker(row).value = value
+		end
+	end
+	
+	def set_fixed_value(value, row, col)
+		if (can_set_value?(row, col) == true) then add_locker(Fixed_Locker.new(value), row, col)
+		else raise RuntimeError, "value cannot be set"
+		end
 	end
 	
 	def is_valid?
@@ -45,5 +53,15 @@ class Board
 		
 		def get_section_inner_col_from_row_and_col(section_index, row, col)
 			col % 3
+		end
+		
+		def add_locker(locker, row, col)
+			@rows[col].set_locker(locker, row)
+			@columns[row].set_locker(locker, col)
+		
+			section_index = get_section_index_from_row_and_col(row, col)
+			inner_section_row = get_section_inner_row_from_row_and_col(section_index, row, col)
+			inner_section_col = get_section_inner_col_from_row_and_col(section_index, row, col)
+			@sections[section_index].set_locker(locker, inner_section_row, inner_section_col)
 		end
 end

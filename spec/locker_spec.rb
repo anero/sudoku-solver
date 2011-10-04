@@ -36,4 +36,10 @@ describe "Locker" do
 		(locker1 == 1).should == false
 		(locker1 == 5).should == true
 	end
+	
+	it "should allow setting new value" do
+		locker = Locker.new
+		
+		locker.can_set_value?.should == true
+	end
 end
