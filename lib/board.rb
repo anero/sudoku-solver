@@ -1,4 +1,7 @@
 require File.dirname(__FILE__) + '/lockers_line'
+require File.dirname(__FILE__) + '/lockers_section'
+require File.dirname(__FILE__) + '/fixed_locker'
+require File.dirname(__FILE__) + '/locker'
 
 class Board
 	def initialize
@@ -42,6 +45,22 @@ class Board
 		valid
 	end
 	
+	def to_s
+		s = ""
+		(0..8).each { |row_index| 
+			(0..8).each { |column_index|
+				value = self.value_at(row_index, column_index)
+				s = "#{s}, #{value != nil ? value : '?'}"
+				if (column_index == 8) then s = "#{s}\n" end
+			}
+		}
+
+		s
+	end
+
+	def solve
+	end
+
 	private
 		def get_section_index_from_row_and_col(row, col)
 			3 * (col / 3) + (row / 3)

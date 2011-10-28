@@ -1,0 +1,301 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "lib/row.rb",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "lib/locker.rb",
+			"settings":
+			{
+				"buffer_size": 415,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "require File.dirname(__FILE__) + '/spec_helper'\nrequire File.dirname(__FILE__) + '/../lib/row'\n\ndescribe \"Row\" do\n	it \"should initialize lockers collection\" do\n		row = Row.new\n\n		row.lockers.length.should == 0\n	end\n\n	it \"should add locker\" do\n		row = Row.new\n		row.add_locker :locker, 3\n\n		row.lockers[3].should == :locker\n	end\n\n	it \"should throw if adding locker on invalid position\" do\n		row = Row.new\n		lambda{row.add_locker :locker, -1}.should raise_error(ArgumentError)\n		lambda{row.add_locker :locker, 0}.should raise_error(ArgumentError)\n		lambda{row.add_locker :locker, 10}.should raise_error(ArgumentError)\n	end\n\n	it \"should return false on is_valid when invalid row\" do\n		row = Row.new\n		row.add_locker :locker, 1\n		row.add_locker :locker, 2\n\n		row.is_valid?.should == false\n	end\n\n	it \"should return true on is_valid when valid row\" do\n		row = Row.new\n		row.add_locker :locker1, 1\n		row.add_locker :locker2, 2\n\n		row.is_valid?.should == true\n	end\n\n	it \"should return unused values\" do\n		row = Row.new\n\n		row.add_locker Locker.new(1), 1\n		row.add_locker Locker.new(9), 2\n\n		unused_values = row.get_unused_values\n\n		unused_values.length.should == 8\n		unused_values.include?(1).should == false\n		unused_values.include?(2).should == true\n		unused_values.include?(3).should == true\n		unused_values.include?(4).should == true\n		unused_values.include?(5).should == true\n		unused_values.include?(6).should == true\n		unused_values.include?(7).should == true\n		unused_values.include?(8).should == true\n		unused_values.include?(9).should == false\n	end	\nend",
+			"file": "spec/row_spec.rb",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 1555,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "spec/locker_spec.rb",
+			"settings":
+			{
+				"buffer_size": 926,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 348.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/diego/dev/ruby/samples/sinatra/iamneato/Readme.textile",
+		"/home/diego/dev/ruby/samples/sinatra/git-wiki/git-wiki.rb",
+		"/home/diego/dev/ruby/samples/programmingRuby1.9/appmkmf_1.rb",
+		"/home/diego/dev/ruby/samples/programmingRuby1.9/appmkmf_2.rb",
+		"/home/diego/dev/ruby/samples/programmingRuby1.9/classes_88.rb"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 87.0,
+		"include_history":
+		[
+			""
+		],
+		"location_history":
+		[
+			"<open folders>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"get",
+			"class"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "lib/row.rb",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 4.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "lib/locker.rb",
+					"settings":
+					{
+						"buffer_size": 415,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								35,
+								35
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "spec/row_spec.rb",
+					"settings":
+					{
+						"buffer_size": 1555,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1124,
+								1124
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 48.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "spec/locker_spec.rb",
+					"settings":
+					{
+						"buffer_size": 926,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 307.0,
+	"status_bar_visible": true
+}
