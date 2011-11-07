@@ -107,4 +107,78 @@ describe "Board" do
 
 		board.can_set_value?(0, 0).should == false
 	end
+
+	it "should return unused values at position when empty board" do
+		board = Board.new
+
+		(0..8).each {|r|
+			(0..8).each{|c|
+				unused_values = board.unused_values_at_position(r, c)
+				(1..9).each { |v| 
+					unused_values.include?(v).should == true 
+				}
+			}
+		}
+	end
+
+	it "should return unused values at position when fixed value" do
+		board = Board.new
+
+		board.set_fixed_value 1, 5, 5
+		unused_values = board.unused_values_at_position(5,5)
+		unused_values.include?(1).should == false 
+		(2..9).each { |v| 
+			unused_values.include?(v).should == true 
+		}
+	end
+
+	it "should return unused values at position when variable value" do
+		board = Board.new
+
+		board.set_value 1, 0, 1
+		unused_values = board.unused_values_at_position(0,1)
+		unused_values.include?(1).should == false 
+		(2..9).each { |v| 
+			unused_values.include?(v).should == true 
+		}
+	end
+
+	it "should return unused values at position when multiple values on same row" do
+		board = Board.new
+
+		board.set_fixed_value 1, 0, 1
+		board.set_fixed_value 2, 0, 2
+		unused_values = board.unused_values_at_position(0,1)
+		unused_values.include?(1).should == false
+		unused_values.include?(2).should == false
+		(3..9).each { |v| 
+			unused_values.include?(v).should == true 
+		}
+	end
+
+	it "should return unused values at position when multiple values on same column" do
+		board = Board.new
+
+		board.set_fixed_value 1, 0, 1
+		board.set_fixed_value 2, 1, 1
+		unused_values = board.unused_values_at_position(0,1)
+		unused_values.include?(1).should == false
+		unused_values.include?(2).should == false
+		(3..9).each { |v| 
+			unused_values.include?(v).should == true 
+		}
+	end
+
+	it "should return unused values at position when multiple values on same section" do
+		board = Board.new
+
+		board.set_fixed_value 1, 0, 1
+		board.set_fixed_value 2, 2, 2
+		unused_values = board.unused_values_at_position(0,1)
+		unused_values.include?(1).should == false
+		unused_values.include?(2).should == false
+		(3..9).each { |v| 
+			unused_values.include?(v).should == true 
+		}
+	end
 end

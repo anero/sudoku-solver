@@ -59,6 +59,29 @@ class Board
 	end
 
 	def solve
+		#(0..8).each { |c|
+		#	(0..8).each { |r|
+		#		if (can_set_value?(r, c)) {
+		#			
+		#		}
+		#	}
+		#}
+	end
+
+	def unused_values_at_position(row, col)
+		unused_values_at_row = @rows[row].get_unused_values
+		unused_values_at_col = @columns[col].get_unused_values
+		section_index = get_section_index_from_row_and_col(row, col)
+		unused_values_at_section = @sections[section_index].get_unused_values
+
+		unused_values = []
+		(1..9).each{|v|
+			if (unused_values_at_row.include?(v) && unused_values_at_col.include?(v) && unused_values_at_section.include?(v))
+				unused_values.push v
+			end				
+		}
+
+		unused_values
 	end
 
 	private
@@ -82,5 +105,9 @@ class Board
 			inner_section_row = get_section_inner_row_from_row_and_col(section_index, row, col)
 			inner_section_col = get_section_inner_col_from_row_and_col(section_index, row, col)
 			@sections[section_index].set_locker(locker, inner_section_row, inner_section_col)
+		end
+
+		def find_solution_value(row, column)
+			
 		end
 end
