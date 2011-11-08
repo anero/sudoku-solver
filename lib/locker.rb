@@ -19,4 +19,8 @@ class Locker
 	def can_set_value?
 		true
 	end
+
+	def to_s
+		@value
+	end
 end

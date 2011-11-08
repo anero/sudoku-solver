@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require File.dirname(__FILE__) + '/../lib/lockers_line'
+require File.dirname(__FILE__) + '/../lib/fixed_locker'
 
 describe "Lockers_Line" do
 	it "should initialize lockers collection" do
@@ -47,23 +48,43 @@ describe "Lockers_Line" do
 		lockers_line.locker(1).should == 9
 	end
 
-	it "should return unused values" do
+	it "should return unused values with variable lockers" do
 		lockers_line = Lockers_Line.new
 
-		lockers_line.set_locker Locker.new(1), 1
-		lockers_line.set_locker Locker.new(9), 2
+		lockers_line.set_locker Locker.new(3), 2
+		lockers_line.set_locker Locker.new(7), 5
 
 		unused_values = lockers_line.get_unused_values
 
 		unused_values.length.should == 7
-		unused_values.include?(1).should == false
+		unused_values.include?(1).should == true
 		unused_values.include?(2).should == true
-		unused_values.include?(3).should == true
+		unused_values.include?(3).should == false
 		unused_values.include?(4).should == true
 		unused_values.include?(5).should == true
 		unused_values.include?(6).should == true
-		unused_values.include?(7).should == true
+		unused_values.include?(7).should == false
 		unused_values.include?(8).should == true
-		unused_values.include?(9).should == false
+		unused_values.include?(9).should == true
+	end
+
+	it "should return unused values fixed lockers" do
+		lockers_line = Lockers_Line.new
+
+		lockers_line.set_locker Fixed_Locker.new(3), 2
+		lockers_line.set_locker Fixed_Locker.new(7), 5
+
+		unused_values = lockers_line.get_unused_values
+
+		unused_values.length.should == 7
+		unused_values.include?(1).should == true
+		unused_values.include?(2).should == true
+		unused_values.include?(3).should == false
+		unused_values.include?(4).should == true
+		unused_values.include?(5).should == true
+		unused_values.include?(6).should == true
+		unused_values.include?(7).should == false
+		unused_values.include?(8).should == true
+		unused_values.include?(9).should == true
 	end	
 end

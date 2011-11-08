@@ -26,6 +26,13 @@ module Lockers_Collection
 
 		return unused_values
 	end
+
+	def to_s
+		s = ""
+		(0..8).each { |v| s = "#{s}, #{@lockers[v] != nil ? @lockers[v].to_s : '?'}" }
+
+		s
+	end
 	
 	private
 		def is_valid_position?(position)
