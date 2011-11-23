@@ -23,6 +23,7 @@ describe "Sudoku Solver" do
 	end
 
 	it "should solve advanced puzzle" do
+puts "\n-----------------------------------\n"		
 		board = Board.new
 		answer = Solve_Scenarios_Helper.create_board_from_file board, "./scenarios/advanced-1.txt"
 

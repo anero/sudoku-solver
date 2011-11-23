@@ -51,6 +51,16 @@ class Board
 		
 		valid
 	end
+
+	def is_solved?
+		(0..8).each { |row_index| 
+			(0..8).each { |column_index|
+				if value_at(row_index, column_index) == nil then return false end
+			}
+		}
+
+		true
+	end
 	
 	def to_s
 		s = ""
@@ -66,8 +76,8 @@ class Board
 	end
 
 	def solve
-		find_solution_value 0, 0
-		puts "\nSOLUTION:\n---------\n#{self}\n\n"
+		find_solution_value 0, 0, 0
+#		puts "\nSOLUTION:\n---------\n#{self}\n\n"
 	end
 
 	def unused_values_at_position(row, col)
@@ -121,19 +131,33 @@ class Board
 			@sections[section_index].set_locker(locker, inner_section_row, inner_section_col)
 		end
 
-		def find_solution_value(row, column)
+		def find_solution_value(row, column, level)
+puts "-----"			
 			if (value_at(row, column) == nil) then
-				unused_values_at_position(row, column).each{ |uv|
+#				unused_values_at_position(row, column).each{ |uv|
+
+				(1..9).each { |uv|
 					set_value(uv, row, column)
-					next_position = get_next_locker_position(row, column)
-					if (next_position != :end_position) then
-						find_solution_value(next_position[0], next_position[1])
+					if is_valid? then
+puts "#{uv} anduvo para (#{row}, #{column})"
+						next_position = get_next_locker_position(row, column)
+						if (next_position != :end_position) then
+							find_solution_value(next_position[0], next_position[1], level+1)
+						else
+							return
+						end
 					end
+
+					if is_solved? then return end
+puts "deshaciendo #{uv} para (#{row}, #{column})"
 				}
+				set_value(nil, row, column)
 			else
+puts "valor fijo en (#{row}, #{column})"
+
 				next_position = get_next_locker_position(row, column)
 				if (next_position != :end_position) then
-					find_solution_value(next_position[0], next_position[1])
+					find_solution_value(next_position[0], next_position[1], level+1)
 				end
 			end
 		end
